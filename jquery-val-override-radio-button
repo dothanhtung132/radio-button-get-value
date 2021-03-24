@@ -1,0 +1,18 @@
+(function ($) {
+    var originalVal = $.fn.val;
+    $.fn.val = function(value) {
+        let me = this;
+        if (typeof value == 'undefined') {
+            if (me.attr('type') == 'radio') {
+                me = me.parents('.form-check-radio').find('input:radio').filter(':checked');
+            }
+            return originalVal.call(me);
+        }
+        else {
+            if (me.attr('type') == 'radio') {
+                me.parents('.form-check-radio').find(`input:radio[value=${value}]`).prop('checked', true);
+            }
+            return originalVal.call(me, value);
+        }
+    };
+})(jQuery);
